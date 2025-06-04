@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]
+then
+  echo "Usage: port-forward <jump> <host>" 1>&2
+  exit 1
+fi
+
+jump="${1}"
+host="${2}"
+
+ssh -J "${jump}" "${host}" \
+    -L 3001:0:3000 \
+    -L 8889:0:8890 \
+    -L 8089:0:8088
+

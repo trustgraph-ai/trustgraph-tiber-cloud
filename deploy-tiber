@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [ $# -ne 3 ]
+then
+  echo "Usage: deploy-tiber <jump> <host> <package>" 1>&2
+  exit 1
+fi
+
+jump="${1}"
+host="${2}"
+pkg="${3}"
+
+echo "Copy install script..." 1>&2
+scp -J "${jump}" install.sh "${host}":/tmp/install.sh
+
+echo "Copy profile setup script..." 1>&2
+scp -J "${jump}" setup-profile.sh "${host}":/tmp/setup-profile.sh
+
+echo "Copy TrustGraph package..." 1>&2
+scp -J "${jump}" "${pkg}" "${host}":/tmp/deploy.zip
+
+echo "Run install script..." 1>&2
+ssh -J "${jump}" "${host}" sudo sh /tmp/install.sh
+
+echo "Run profile setup..." 1>&2
+ssh -J "${jump}" "${host}" sh /tmp/setup-profile.sh
+
+echo "Done" 1>&2
+
