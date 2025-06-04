@@ -13,6 +13,9 @@ pkg="${3}"
 echo "Copy install script..." 1>&2
 scp -J "${jump}" install.sh "${host}":/tmp/install.sh
 
+echo "Copy HF token..." 1>&2
+scp -J "${jump}" hf.token "${host}":/tmp/hf.token
+
 echo "Copy profile setup script..." 1>&2
 scp -J "${jump}" setup-profile.sh "${host}":/tmp/setup-profile.sh
 

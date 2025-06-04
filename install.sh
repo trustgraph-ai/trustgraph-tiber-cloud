@@ -9,13 +9,14 @@ apt install -y python3-venv
 rm -rf /usr/local/trustgraph
 python3 -m venv /usr/local/trustgraph
 . /usr/local/trustgraph/bin/activate
-pip install trustgraph-cli==1.0
+pip install trustgraph-cli==1.0.13
 
 # Put TrustGraph stuff in place
 rm -rf /usr/local/tg-deploy
 mkdir /usr/local/tg-deploy
 cd /usr/local/tg-deploy
 unzip /tmp/deploy.zip
+sed -i "s/TOKEN_PLACEHOLDER/$(cat /tmp/hf.token)/" docker-compose.yaml
 chmod 755 prometheus/ grafana/ grafana/*/
 chmod 644 prometheus/* grafana/*/*
 
